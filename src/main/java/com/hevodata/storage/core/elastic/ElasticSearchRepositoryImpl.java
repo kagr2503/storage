@@ -19,7 +19,7 @@ public class ElasticSearchRepositoryImpl implements ElasticSearchRepository<Stor
 
     private final ElasticsearchClient elasticsearchClient = ElasticsearchConfig.getInstance().getClient();
 
-    private final String indexName = "file-search";
+    private final String indexName = "hevo-search";
 
     @Override
     @Async

@@ -2,6 +2,7 @@ package com.hevodata.storage.controller;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.util.StringUtils;
 import com.hevodata.storage.core.elastic.ElasticSearchRepository;
 import com.hevodata.storage.core.s3.S3FileProcessor;
 import com.hevodata.storage.model.StoreFile;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,14 +48,13 @@ public class ElasticSearchController {
     }
 
     @GetMapping("/documents/search")
-    public ResponseEntity<List<StoreFile>> searchAllDocuments() throws IOException {
-        List<StoreFile> documents = elasticsearchRepository.searchAllDocuments();
-        return new ResponseEntity<>(documents, HttpStatus.OK);
-    }
-
-    @GetMapping("/documents/searchByContent")
-    public ResponseEntity<List<StoreFile>> searchByContent(@RequestParam String text) throws IOException {
-        List<StoreFile> documents = elasticsearchRepository.searchByContent(text);
+    public ResponseEntity<List<StoreFile>> searchAllDocuments(@RequestParam(required = false) String text) throws IOException {
+        List<StoreFile> documents = new ArrayList<>();
+        if(StringUtils.isNullOrEmpty(text)){
+            documents = elasticsearchRepository.searchAllDocuments();
+        }else {
+            documents = elasticsearchRepository.searchByContent(text);
+        }
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
 }
