@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class AwsResources {
 
-    private final String accessKey = "AKIA5T4OTT7DO7ZVYHHM";
-    private final String secretKey = "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";
+    private final String accessKey = "XXXX";
+    private final String secretKey = "YYYY";
 
     private static final AtomicReference<AwsResources> INSTANCE = new AtomicReference<>(null);
     private final AmazonS3 amazonS3;
